@@ -1,0 +1,124 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>J&Z</title>
+</head>
+<body>
+
+<style>
+
+    body{
+        background-color: #638CBB;
+
+    }
+
+    input{
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        font-size:30px;
+    }
+
+
+    inpur::placeholder{
+        color: #d3d3d3;
+    }
+
+    h1{
+        color: #ffffff;
+    }
+
+    .submit{
+        background-color: #6BA3E8;
+    }
+
+    .center-column{
+        /*width: 600px;*/
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 3px;
+        /*box-shadow: 6px 2px 30px 0px rgba(0,0,0,0.75);*/
+
+    }
+
+    .item-row{
+        background-color: #906abd;
+        margin: 10px;
+        padding: 20px;
+        border-radius: 3px;
+        color: #fff;
+        font-size: 30px;
+        box-shadow: 0px -1px 10px -4px rgba(0,0,0,0.75);
+    }
+
+    .user{
+        font-size: 15px;
+    }
+
+    .title{
+        color: black;
+    }
+
+
+</style>
+
+
+
+<div class="center-column">
+    <form class='header-bar' action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button class="btn btn-lg btn-info" type="submit">Logout</button>
+    </form>
+
+
+
+    <br>
+
+
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'create' %}">Create Task</a>
+
+<!--    <div class="title">-->
+<!--        <form method="POST">-->
+<!--            {% csrf_token %}-->
+<!--            {{form.title}}-->
+<!--            <input class="btn btn-info" value="Save" type="submit" name="Create Task">-->
+<!--        </form>-->
+<!--        {{titles}}-->
+<!--        {% for title in titles %}-->
+<!--            {{title}}-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+    <div class="todo-list">
+    {% for task in tasks %}
+        <div class="item-row">
+
+            <div class="btn-group btn-group-lg" role="group" aria-label="...">
+
+                <a class="btn btn-lg btn-warning" href="{% url 'update_task' task.id %}">Update</a>
+                <a class="btn btn-lg btn-danger" href="{% url 'delete' task.id %}">Delete</a>
+            </div>
+
+            {% if task.complete == True %}
+            <strike>{{ task }}</strike>
+            {% else %}
+            <span>{{task}}</span>
+            {% endif %}
+            <div class="user">
+                {{task.user}}
+                {{task.created}}
+            </div>
+
+        </div>
+    {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
